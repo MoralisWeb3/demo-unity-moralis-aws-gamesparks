@@ -19,9 +19,12 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        string address = "";
+        string chain = "";
+        
         // Initializing requests
-        getNativeBalanceRequest = new MyWeb3GameBackendOperations.GetNativeBalanceRequest();
-        getWalletNftsRequest = new MyWeb3GameBackendOperations.GetWalletNftsRequest();
+        getNativeBalanceRequest = new MyWeb3GameBackendOperations.GetNativeBalanceRequest(address, chain);
+        getWalletNftsRequest = new MyWeb3GameBackendOperations.GetWalletNftsRequest(address, chain);
     }
     
     void Update()

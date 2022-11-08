@@ -1,3 +1,6 @@
+
+
+
 using System;
 using Amazon.GameSparks.Unity.DotNet;
 using Amazon.GameSparks.Unity.EngineIntegration;
@@ -10,15 +13,24 @@ namespace Amazon.GameSparks.Unity.Generated
 
         public sealed class GetWalletNftsRequest
         {
+            [JsonProperty]
+            public string address { get; }
+            [JsonProperty]
+            public string chain { get; }
 
-            public GetWalletNftsRequest()
+            public GetWalletNftsRequest(
+                string address,
+                string chain)
             {
+                this.address = address;
+                this.chain = chain;
             }
 
             public override string ToString()
             {
                 return string.Concat(
-                   "");
+                   $"{nameof(address)}: { address }", Environment.NewLine,
+                   $"{nameof(chain)}: { chain }");
             }
         }
 
@@ -57,16 +69,24 @@ namespace Amazon.GameSparks.Unity.Generated
         }
         public sealed class GetNativeBalanceRequest
         {
+            [JsonProperty]
+            public string address { get; }
+            [JsonProperty]
+            public string chain { get; }
 
             public GetNativeBalanceRequest(
-)
+                string address,
+                string chain)
             {
+                this.address = address;
+                this.chain = chain;
             }
 
             public override string ToString()
             {
                 return string.Concat(
-                   "");
+                   $"{nameof(address)}: { address }", Environment.NewLine,
+                   $"{nameof(chain)}: { chain }");
             }
         }
 
