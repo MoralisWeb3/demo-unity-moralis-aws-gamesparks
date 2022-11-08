@@ -6,6 +6,7 @@ using UnityEngine;
 using Amazon.GameSparks.Unity.DotNet;
 using Amazon.GameSparks.Unity.Editor.Assets;
 using Amazon.GameSparks.Unity.Generated;
+using TMPro;
 
 public class AppManager : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class AppManager : MonoBehaviour
     [Header("UI Elements")]
     [SerializeField] private GameObject authPanel;
     [SerializeField] private GameObject requestsPanel;
+    [SerializeField] private TextMeshProUGUI responseLabel;
     
     private string _walletAddress;
     private string _chainId = "80001"; // Mumbai. Check if we can also retrieve the chain id automatically using ChainSafe!
@@ -31,6 +33,8 @@ public class AppManager : MonoBehaviour
             Debug.Log("We could not retrieve the wallet address");
             return;
         }
+
+        _walletAddress = "0x5f2d00B7DC24E16D06ac63D10A066470b7BDD3bB";
         
         authPanel.SetActive(false);
         requestsPanel.SetActive(true);
@@ -98,11 +102,13 @@ public class AppManager : MonoBehaviour
     private void HandleGetNativeBalanceResponse(Message<MyWeb3GameBackendOperations.GetNativeBalanceResponse> response)
     {
         Debug.Log(response.Payload.result);
+        responseLabel.text = "Native balance: " + response.Payload.result;
     }
     
     private void HandleGetWalletNftsRequest(Message<MyWeb3GameBackendOperations.GetWalletNftsResponse> response)
     {
         Debug.Log(response.Payload.result);
+        responseLabel.text = "Wallet NFTs: " + response.Payload.result;
     }
 
     #endregion
