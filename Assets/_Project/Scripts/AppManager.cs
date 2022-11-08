@@ -9,9 +9,6 @@ using Amazon.GameSparks.Unity.Generated;
 
 public class AppManager : MonoBehaviour
 {
-    [Header("ChainSafe Auth")]
-    [SerializeField] private SignVerifyWebWallet signVerifyWebWallet;
-    
     [Header("GameSparks")]
     [SerializeField] private ConnectionScriptableObject connectionScriptableObject;
     
@@ -42,27 +39,9 @@ public class AppManager : MonoBehaviour
     
     #region PUBLIC_METHODS
     
-    public async void Connect()
+    public async void Authenticate()
     {
-        var message = "Plase sign this message";
-        
-        var signature = await signVerifyWebWallet.SignMessage(message);
-
-        if (string.IsNullOrEmpty(signature))
-        {
-            Debug.Log("Signature failed");
-            return;
-        }
-
-        var publicAddress = signVerifyWebWallet.VerifySignature(signature, message);
-
-        if (string.IsNullOrEmpty(publicAddress))
-        {
-            Debug.Log("Verification failed");
-            return;
-        }
-
-        _walletAddress = publicAddress;
+        _walletAddress = await CustomAuthService.Authenticate();
     }
     
     public void GetNativeBalance()
