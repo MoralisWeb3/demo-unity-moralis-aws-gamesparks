@@ -1,6 +1,3 @@
-
-
-
 using System;
 using Amazon.GameSparks.Unity.DotNet;
 using Amazon.GameSparks.Unity.EngineIntegration;

@@ -11,41 +11,39 @@ public class AppManager : MonoBehaviour
 {
     [Header("GameSparks")]
     [SerializeField] private ConnectionScriptableObject connectionScriptableObject;
+
+    [Header("UI Elements")]
+    [SerializeField] private GameObject authPanel;
+    [SerializeField] private GameObject gameSparksPanel;
     
     private string _walletAddress;
-    private string _chainId = "80001"; //Mumbai
-        
-    [Header("UI Elements")]
-    [SerializeField] private GameObject panel;
+    private string _chainId = "80001"; // Mumbai. Check if we can also retrieve the chain id automatically using ChainSafe!
     
-    
-    #region UNITY_LIFECYCLE
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            GetNativeBalance();
-        }
-        
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            GetWalletNfts();
-        }
-    }
-
-    #endregion
-
     
     #region PUBLIC_METHODS
     
     public async void Authenticate()
     {
         _walletAddress = await CustomAuthService.Authenticate();
+
+        if (string.IsNullOrEmpty(_walletAddress))
+        {
+            Debug.Log("We could not retrieve the wallet address");
+            return;
+        }
+        
+        authPanel.SetActive(false);
+        gameSparksPanel.SetActive(true);
     }
     
     public void GetNativeBalance()
     {
+        if (string.IsNullOrEmpty(_walletAddress) || string.IsNullOrEmpty(_chainId))
+        {
+            Debug.Log("You need the wallet address and the chain id to make this request!");
+            return;
+        }
+        
         var getNativeBalanceRequest = new MyWeb3GameBackendOperations.GetNativeBalanceRequest(_walletAddress, _chainId);
         
         try
@@ -66,6 +64,12 @@ public class AppManager : MonoBehaviour
     
     public void GetWalletNfts()
     {
+        if (string.IsNullOrEmpty(_walletAddress) || string.IsNullOrEmpty(_chainId))
+        {
+            Debug.Log("You need the wallet address and the chain id to make this request!");
+            return;
+        }
+        
         var getWalletNftsRequest = new MyWeb3GameBackendOperations.GetWalletNftsRequest(_walletAddress, _chainId);
         
         try
