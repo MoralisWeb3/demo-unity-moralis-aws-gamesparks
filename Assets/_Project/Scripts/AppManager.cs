@@ -14,7 +14,7 @@ public class AppManager : MonoBehaviour
 
     [Header("UI Elements")]
     [SerializeField] private GameObject authPanel;
-    [SerializeField] private GameObject gameSparksPanel;
+    [SerializeField] private GameObject requestsPanel;
     
     private string _walletAddress;
     private string _chainId = "80001"; // Mumbai. Check if we can also retrieve the chain id automatically using ChainSafe!
@@ -33,9 +33,10 @@ public class AppManager : MonoBehaviour
         }
         
         authPanel.SetActive(false);
-        gameSparksPanel.SetActive(true);
+        requestsPanel.SetActive(true);
     }
     
+    // Using GameSparks SDK
     public void GetNativeBalance()
     {
         if (string.IsNullOrEmpty(_walletAddress) || string.IsNullOrEmpty(_chainId))
@@ -62,6 +63,7 @@ public class AppManager : MonoBehaviour
         }
     }
     
+    // Using GameSparks SDK
     public void GetWalletNfts()
     {
         if (string.IsNullOrEmpty(_walletAddress) || string.IsNullOrEmpty(_chainId))
