@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 513ef5af1ad74c7ba268d637389f52a3, type: 3}
   m_Name: Connection
   m_EditorClassIdentifier: 
-  gameKey: 
+  gameKey: VbRjbfXhVthtZPXeL65d12t40FpGK_9ldhm9BA1WV6I=
   authenticationProvider: 0
   region: 1
   endpointOverride: 
