@@ -33,8 +33,6 @@ public class AppManager : MonoBehaviour
             Debug.Log("We could not retrieve the wallet address");
             return;
         }
-
-        _walletAddress = "0x5f2d00B7DC24E16D06ac63D10A066470b7BDD3bB";
         
         authPanel.SetActive(false);
         requestsPanel.SetActive(true);
