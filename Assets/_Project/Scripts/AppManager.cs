@@ -15,25 +15,15 @@ public class AppManager : MonoBehaviour
     [Header("GameSparks")]
     [SerializeField] private ConnectionScriptableObject connectionScriptableObject;
     
-    // GameSparks requests
-    private MyWeb3GameBackendOperations.GetNativeBalanceRequest getNativeBalanceRequest;
-    private MyWeb3GameBackendOperations.GetWalletNftsRequest getWalletNftsRequest;
-
+    private string _walletAddress;
+    private string _chainId = "80001"; //Mumbai
+        
     [Header("UI Elements")]
     [SerializeField] private GameObject panel;
     
+    
     #region UNITY_LIFECYCLE
 
-    private void Start()
-    {
-        string address = "";
-        string chain = "";
-        
-        // Initializing requests
-        getNativeBalanceRequest = new MyWeb3GameBackendOperations.GetNativeBalanceRequest(address, chain);
-        getWalletNftsRequest = new MyWeb3GameBackendOperations.GetWalletNftsRequest(address, chain);
-    }
-    
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.A))
@@ -64,20 +54,21 @@ public class AppManager : MonoBehaviour
             return;
         }
 
-        var walletAddress = signVerifyWebWallet.VerifySignature(signature, message);
+        var publicAddress = signVerifyWebWallet.VerifySignature(signature, message);
 
-        if (string.IsNullOrEmpty(walletAddress))
+        if (string.IsNullOrEmpty(publicAddress))
         {
             Debug.Log("Verification failed");
             return;
         }
-        
-        //TODO
-        Debug.Log("Connected :)");
+
+        _walletAddress = publicAddress;
     }
     
     public void GetNativeBalance()
     {
+        var getNativeBalanceRequest = new MyWeb3GameBackendOperations.GetNativeBalanceRequest(_walletAddress, _chainId);
+        
         try
         {
             Debug.Log("Sending GetNativeBalance request");
@@ -96,6 +87,8 @@ public class AppManager : MonoBehaviour
     
     public void GetWalletNfts()
     {
+        var getWalletNftsRequest = new MyWeb3GameBackendOperations.GetWalletNftsRequest(_walletAddress, _chainId);
+        
         try
         {
             Debug.Log("Sending GetNativeBalance request");
